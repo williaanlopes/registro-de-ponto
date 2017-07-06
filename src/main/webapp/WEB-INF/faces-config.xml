@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+	version="2.2">
+	
+	<application>
+	
+		<navigation-handler>org.primefaces.mobile.application.MobileNavigationHandler</navigation-handler>
+		<default-render-kit-id>PRIMEFACES_MOBILE</default-render-kit-id>
+		<locale-config>
+			<default-locale>pt_BR</default-locale>
+		</locale-config>
+		
+		<message-bundle>messages/PTBR</message-bundle>
+		
+		<action-listener>org.omnifaces.eventlistener.ResetInputAjaxActionListener</action-listener>
+		
+	</application>
+	
+	
+	
+	
+	
+</faces-config>

@@ -1,0 +1,16 @@
+.icon {
+	text-align: center !important;
+	display: block;
+	max-width: 100%;
+	height: auto;
+	text-align: center;
+	margin: 0 auto !important; 
+	max-height: 200px;
+}
+
+.header {
+	color: #ffffff !important;
+	background-color: #00569d !important;
+	border-color: none !important;
+	text-shadow: none !important;
+}

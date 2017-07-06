@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile">
+
+	<ui:composition template="WEB-INF/template/layout.xhtml">
+		<ui:define name="conteudo">		
+			<pm:page id="ponto">
+				<pm:header styleClass="header" title="Ponto Professor" ></pm:header>
+				<pm:content>			
+					<h:graphicImage url="http://icons.iconarchive.com/icons/iconsmind/outline/512/Professor-icon.png" styleClass="icon" alt="icon"/>
+		
+					<h:form id="form-ponto">					
+						<p:growl id="growl" globalOnly="true" autoUpdate="true" life="3000"/>				
+	
+						<p:selectOneMenu id="curso" value="#{frequenciaMB.frequencia.curso}" converter="omnifaces.SelectItemsConverter" 
+								required="true" requiredMessage="Campo obrigatório!">
+							<f:selectItem itemLabel="Selecionar Curso" noSelectionOption="true"/>
+							<f:selectItems value="#{frequenciaMB.cursos}" var="c" itemLabel="#{c.nome}" itemValue="#{c}"/> 
+							<f:ajax listener="#{frequenciaMB.listarDisciplinas}" execute="@this" event="change" render="form-ponto:disciplina"/>
+						</p:selectOneMenu>
+						<p:message id="mcurso" for="curso"/>
+						
+						<p:selectOneMenu id="disciplina" value="#{frequenciaMB.frequencia.disciplina}" converter="omnifaces.SelectItemsConverter"
+								required="true" requiredMessage="Campo obrigatório!">
+							<f:selectItem itemLabel="Selecionar Disciplina" noSelectionOption="true"/>
+							<f:selectItems value="#{frequenciaMB.disciplinas}" var="d" itemLabel="#{d.nome}" itemValue="#{d}"/> 
+						</p:selectOneMenu>
+						<p:message id="mdisciplina" for="disciplina"/>
+						
+						<pm:field>
+							<p:password id="matricula" placeholder="Código" value="#{frequenciaMB.professor.matricula}" style="text-align: center !important; padding-left: 10px;"/>	
+							<p:commandButton value="Enviar" actionListener="#{frequenciaMB.enviar()}" update="@form" resetValues="true">
+								<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+							</p:commandButton>
+						</pm:field>
+						
+					</h:form>
+				</pm:content>	
+
+				<pm:footer fixed="true">				
+					<p:tabMenu activeIndex="0">
+				    	<p:menuitem value="Ponto" outcome="pm:ponto" icon="ui-icon-home" iconPos="top"/>
+				    	<p:menuitem value="Horarios" outcome="pm:horario" icon="ui-icon-calendar" iconPos="top" />
+					</p:tabMenu>				
+				</pm:footer>			
+			</pm:page>
+		
+			<pm:page id="horario">			
+				<pm:header styleClass="header" title="Ponto Professor" ></pm:header>
+				<pm:content>
+					<h:graphicImage url="https://www.gitp.com.au/wp-content/uploads/2016/09/our-next-event-icon-black.png" styleClass="icon" alt="icon"/>
+					
+					<h:form id="form-horario">
+						<p:selectOneMenu id="curso" value="#{frequenciaMB.frequencia.curso}" converter="omnifaces.SelectItemsConverter" 
+								required="true" requiredMessage="Campo obrigatório!">
+							<f:selectItem itemLabel="Selecionar Curso" noSelectionOption="true"/>
+							<f:selectItems value="#{frequenciaMB.cursos}" var="c" itemLabel="#{c.nome}" itemValue="#{c}"/> 
+							<f:ajax listener="#{frequenciaMB.listarDisciplinas}" execute="@this" event="change" render="form-horario:disciplina"/>
+						</p:selectOneMenu>
+						
+						<p:selectOneMenu id="disciplina" value="#{frequenciaMB.frequencia.disciplina}" converter="omnifaces.SelectItemsConverter"
+								required="true" requiredMessage="Campo obrigatório!">
+							<f:selectItem itemLabel="Selecionar Disciplina" noSelectionOption="true"/>
+							<f:selectItems value="#{frequenciaMB.disciplinas}" var="d" itemLabel="#{d.nome}" itemValue="#{d}"/> 
+							<f:ajax listener="#{frequenciaMB.listarHorario}" execute="@this" event="change" render="form-horario:table-horario"/>
+						</p:selectOneMenu>
+						
+						<p:dataTable id="table-horario" var="horario" value="#{frequenciaMB.horarios}" emptyMessage="Nenhum horário encontrada">
+							<p:column headerText="Dia">
+								<h:outputText value="#{horario.dia}"/>
+							</p:column>
+							<p:column headerText="Turno">
+								<h:outputText value="#{horario.turno}"/>
+							</p:column>
+							<p:column headerText="Horário">
+								<h:outputText value="de #{horario.deHorario} as #{horario.ateHorario}">
+									<f:convertDateTime type="time" pattern="HH:mm" />
+								</h:outputText>
+							</p:column>
+						</p:dataTable>
+					</h:form>
+				</pm:content>
+			
+				<pm:footer fixed="true">
+					<p:tabMenu activeIndex="1">
+				    	<p:menuitem value="Ponto" outcome="pm:ponto" icon="ui-icon-home" iconPos="top"/>
+				    	<p:menuitem value="Horarios" outcome="pm:horario" icon="ui-icon-calendar" iconPos="top" />
+					</p:tabMenu>
+				</pm:footer>
+			</pm:page>
+		</ui:define>	
+	</ui:composition>
+</html>
